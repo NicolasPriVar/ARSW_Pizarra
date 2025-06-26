@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+# 🖌️ Pizarra Interactiva con React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este proyecto es una aplicación web que permite al usuario dibujar sobre una pizarra, cambiar el color del trazo, ajustar el grosor del pincel, y borrar completamente el lienzo. La interfaz es amigable, responsiva y está construida completamente con React.js usando componentes funcionales y hooks.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Tecnologías usadas
 
-### `npm start`
+- ⚛️ React.js (con hooks: `useState`, `useEffect`, `useRef`)
+- 🎨 HTML5 Canvas
+- 💅 CSS3 (componentes estilizados)
+- 🧹 Clean UI con componentes reutilizables
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧠 ¿Qué es React?
 
-### `npm test`
+**React** es una biblioteca de JavaScript desarrollada por Facebook para construir interfaces de usuario. Su enfoque está basado en componentes, lo que permite dividir una aplicación en piezas reutilizables y modulares.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Principales características:
+- **Declarativo**: describe qué debe mostrarse, no cómo.
+- **Componentes**: unidades reutilizables con lógica y vista.
+- **Virtual DOM**: actualizaciones eficientes y rápidas.
+- **Hooks**: funciones como `useState` o `useEffect` permiten manejar estado y efectos secundarios sin clases.
 
-### `npm run build`
+React facilita el desarrollo de interfaces complejas mediante la composición de componentes simples y manejables.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## ⚙️ ¿Cómo funciona cada componente?
+App.jsx
+- Componente principal que define el estado global del color y grosor del trazo.
+- Integra Toolbar y CanvasBoard.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+CanvasBoard.jsx
+- Lienzo para dibujar usando HTML5 <canvas>.
+- Usa useRef para acceder al contexto del canvas y useState para controlar si el usuario está dibujando.
+Implementa funciones:
+- startDrawing, draw, stopDrawing: controlan la interacción del mouse.
+- clearCanvas: borra todo el lienzo.
+- Incluye el botón lateral para limpiar el canvas (BotonBorrar).
 
-### `npm run eject`
+Toolbar.jsx
+- Muestra el componente ColorPicker y un input tipo range para cambiar el grosor de trazo.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+ColorPicker.jsx
+- Permite seleccionar el color del pincel.
+- Estilizado con bordes redondeados y sombra.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+BotonBorrar.jsx
+- Botón con ícono 🧹 que ejecuta la limpieza del lienzo.
+- Tiene su propio estilo (BotonBorrar.css) y está centrado verticalmente al costado derecho del lienzo.
