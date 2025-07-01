@@ -14,10 +14,8 @@ export default function CanvasBoard({ color, lineWidth }){
 
         const ctx = canvas.getContext('2d');
         ctx.lineCap = 'round';
-        ctx.strokeStyle = color;
-        ctx.lineWidth = lineWidth;
         ctxRef.current = ctx;
-    }, [color, lineWidth]);
+    }, []);
 
     useEffect(() => {
         if (ctxRef.current) ctxRef.current.strokeStyle = color;
