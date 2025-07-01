@@ -1,0 +1,15 @@
+.boton-borrar {
+  margin-top: 1rem;
+  padding: 10px 20px;
+  background-color: #00cbc8;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.boton-borrar:hover {
+  background-color: #6FCFEB;
+}

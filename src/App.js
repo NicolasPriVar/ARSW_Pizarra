@@ -1,25 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import CanvasBoard from './componentes/CanvasBoard';
+import Toolbar from './componentes/Toolbar';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [color, setColor] = useState('#000000');
+    const [lineWidth, setLineWidth] = useState(3);
+
+    return (
+        <div style={{ textAlign: 'center', padding: '20px' }}>
+            <h2>Pizarra</h2>
+            <Toolbar
+                color={color}
+                setColor={setColor}
+                lineWidth={lineWidth}
+                setLineWidth={setLineWidth}
+            />
+            <CanvasBoard color={color} lineWidth={lineWidth} />
+        </div>
+    );
 }
 
 export default App;
