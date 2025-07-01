@@ -17,7 +17,7 @@ export default function CanvasBoard({ color, lineWidth }){
         ctx.strokeStyle = color;
         ctx.lineWidth = lineWidth;
         ctxRef.current = ctx;
-    }, []);
+    }, [color, lineWidth]);
 
     useEffect(() => {
         if (ctxRef.current) ctxRef.current.strokeStyle = color;
