@@ -10,7 +10,7 @@ export default function CanvasBoard({ color, lineWidth }) {
     const [isDrawing, setIsDrawing] = useState(false);
 
     useEffect(() => {
-        const socket = new SockJS('pizarra-h0bjb0g0ccemh8bg.canadacentral-01.azurewebsites.net');
+        const socket = new SockJS('https://pizarra-h0bjb0g0ccemh8bg.canadacentral-01.azurewebsites.net/ws');
         stompClient.current = new Client({
             webSocketFactory: () => socket,
             onConnect: () => {
