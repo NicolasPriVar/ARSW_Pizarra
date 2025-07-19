@@ -1,5 +1,46 @@
 body {
   margin: 0;
   font-family: Realbun;
-  background-color: #f2f2f2;
+  background-color: #4d8dec;
+}
+
+.canvas-container {
+  display: flex;
+  justify-content: column;
+  align-items: center;
+  margin-top: 20px;
+}
+.boton-cerrar-sesion {
+  margin-top: 1rem;
+  padding: 10px 25px;
+  background-color: #ff4d4d;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.boton-cerrar-sesion:hover {
+  background-color: #ff1a1a;
+  transform: scale(1.05);
+}
+
+.boton-cerrar-sesion:active {
+  transform: scale(0.95);
+}
+.canvas {
+  background-color: white;
+  border: 3px solid #222;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  cursor: crosshair;
+}
+.bottom-button {
+  margin-top: 16px;
+    display: flex;
+    justify-content: center;
 }

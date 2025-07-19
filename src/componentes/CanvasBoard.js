@@ -8,9 +8,10 @@ export default function CanvasBoard({ color, lineWidth }) {
     const ctxRef = useRef(null);
     const stompClient = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
+    const token = localStorage.getItem('google_token');
 
     useEffect(() => {
-        const socket = new SockJS('https://pizarra-h0bjb0g0ccemh8bg.canadacentral-01.azurewebsites.net/ws');
+        const socket = new SockJS(`http://localhost:8080/ws?token=${token}`);
         stompClient.current = new Client({
             webSocketFactory: () => socket,
             onConnect: () => {
@@ -18,6 +19,8 @@ export default function CanvasBoard({ color, lineWidth }) {
                     const data = JSON.parse(message.body);
                     if (data.type === 'beginPath') {
                         ctxRef.current.beginPath();
+                        ctxRef.current.strokeStyle = data.color;
+                        ctxRef.current.lineWidth = data.lineWidth;
                         ctxRef.current.moveTo(data.x, data.y);
                     } else if (data.type === 'draw') {
                         ctxRef.current.strokeStyle = data.color;
@@ -28,7 +31,12 @@ export default function CanvasBoard({ color, lineWidth }) {
                         clearCanvas();
                     }
                 });
-            },
+                const trazosPendientes = JSON.parse(localStorage.getItem('trazosLocal')) || [];
+                trazosPendientes.forEach((trazo) => {
+                    sendMessage(trazo);
+                });
+                localStorage.removeItem('trazosLocal');
+            }
         });
 
         stompClient.current.activate();
@@ -37,11 +45,21 @@ export default function CanvasBoard({ color, lineWidth }) {
     }, []);
 
     const sendMessage = (message) => {
-        stompClient.current.publish({
-            destination: '/app/draw',
-            body: JSON.stringify(message),
-        });
+        if (stompClient.current && stompClient.current.connected) {
+            stompClient.current.publish({
+                destination: "/app/draw",
+                body: JSON.stringify(message),
+            });
+        } else {
+            console.warn("⚠️ WebSocket no conectado todavía. No se envió el mensaje:", message);
+        }
     };
+
+    function guardarTrazo(trazo) {
+        const trazosGuardados = JSON.parse(localStorage.getItem('trazosLocal')) || [];
+        trazosGuardados.push(trazo);
+        localStorage.setItem('trazosLocal', JSON.stringify(trazosGuardados));
+    }
 
     const clearCanvas = () => {
         const canvas = canvasRef.current;
@@ -56,9 +74,21 @@ export default function CanvasBoard({ color, lineWidth }) {
     const startDrawing = ({ nativeEvent }) => {
         const { offsetX, offsetY } = nativeEvent;
         ctxRef.current.beginPath();
+        ctxRef.current.strokeStyle = color;
+        ctxRef.current.lineWidth = lineWidth;
         ctxRef.current.moveTo(offsetX, offsetY);
         setIsDrawing(true);
-        sendMessage({ type: 'beginPath', x: offsetX, y: offsetY });
+
+        const trazo = {
+            type: "beginPath",
+            x: offsetX,
+            y: offsetY,
+            color: color,
+            lineWidth: lineWidth
+        };
+
+        guardarTrazo(trazo);
+        sendMessage(trazo);
     };
 
     const draw = ({ nativeEvent }) => {
@@ -66,7 +96,17 @@ export default function CanvasBoard({ color, lineWidth }) {
         const { offsetX, offsetY } = nativeEvent;
         ctxRef.current.lineTo(offsetX, offsetY);
         ctxRef.current.stroke();
-        sendMessage({ type: 'draw', x: offsetX, y: offsetY, color, lineWidth });
+
+        const trazo = {
+            type: "draw",
+            x: offsetX,
+            y: offsetY,
+            color: color,
+            lineWidth: lineWidth
+        };
+
+        guardarTrazo(trazo);
+        sendMessage(trazo);
     };
 
     const stopDrawing = () => {
@@ -92,9 +132,7 @@ export default function CanvasBoard({ color, lineWidth }) {
                 onMouseLeave={stopDrawing}
                 className="canvas"
             />
-            <div className="side-button">
-                <BotonBorrar onClear={clearAndNotify} />
-            </div>
+            <BotonBorrar onClear={clearAndNotify} />
         </div>
     );
 }
