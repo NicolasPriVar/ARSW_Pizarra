@@ -19,7 +19,7 @@ export default function Chat({ user }) {
                     setMessages((prev) => [...prev, msg]);
                 });
             },
-        });
+        },[token]);
 
         stompClient.current.activate();
 
