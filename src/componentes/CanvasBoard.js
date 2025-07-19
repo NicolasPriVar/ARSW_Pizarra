@@ -37,7 +37,7 @@ export default function CanvasBoard({ color, lineWidth }) {
                 });
                 localStorage.removeItem('trazosLocal');
             }
-        },[token]);
+        });
 
         stompClient.current.activate();
 
